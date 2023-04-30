@@ -56,8 +56,11 @@ const Karakter = ({character, films}) => {
 
     useEffect(() => {
         let sorted = character.films.map((film) => {
-            let selected = films.filter(f => f.title === film)[0];
-            return {episode_id: selected.episode_id, title: selected.title};
+            let selected = films.filter(f => f.title === film);
+
+            if(selected[0] !== undefined){
+                return {episode_id: selected[0].episode_id, title: selected[0].title};
+            }
         })
         sorted = sorted.sort((a,b) => a.episode_id - b.episode_id);
         setSortedFilms(sorted);
@@ -67,7 +70,7 @@ const Karakter = ({character, films}) => {
         <CharContainer>
             <CharButton onClick={() => setToggle(!toggle)}><span>{character.name}</span></CharButton>
             {
-                toggle && 
+                toggle &&
                 <CharDetail>
                     <CharInfo className={toggle ? "active" : "inactive"}>
                         <li><span>Gender:</span> {character.gender}</li>
